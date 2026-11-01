@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.io.IOException
 import java.net.HttpURLConnection
-import java.net.URL
+import java.net.URI
 
 /**
  * Where rain slots come from. Swap this for a radar-based source later without touching the UI.
@@ -73,7 +73,7 @@ class OpenMeteoRainSource(
 
 /** Plain GET returning the body. Throws [IOException] on any non-2xx. */
 fun httpGet(url: String, userAgent: String = USER_AGENT, timeoutMs: Int = 15_000): String {
-    val conn = URL(url).openConnection() as HttpURLConnection
+    val conn = URI(url).toURL().openConnection() as HttpURLConnection
     try {
         conn.connectTimeout = timeoutMs
         conn.readTimeout = timeoutMs
